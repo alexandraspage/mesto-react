@@ -3,16 +3,16 @@ import Card from './Card';
 import api from '../utils/Api';
 
 function Main(props) {
-    const [userName, setUserName] = React.useState([]);
-    const [userDescription, setUserDescription] = React.useState([]);
-    const [userAvatar, setUserAvatar] = React.useState([]);
+    const [userName, setUserName] = React.useState();
+    const [userDescription, setUserDescription] = React.useState();
+    const [userAvatar, setUserAvatar] = React.useState();
     const [cards, setCards] = React.useState([]);
 
     React.useEffect(() => {
 
         api.getInfo()
             .then((data) => {
-                
+
                 setUserDescription(data.about)
                 setUserAvatar(data.avatar);
                 setUserName(data.name)
@@ -23,16 +23,17 @@ function Main(props) {
 
     React.useEffect(() => {
         api.getAllCards()
-        .then((data) => {
-            setCards(data.map(item => ({
-                id: item._id,
-                name: item.name,
-                link: item.link,
-                likes: item.likes.length
-            })))
-            
-        })
-        .catch((err) => { console.log(err) })
+            .then((data) => {
+                setCards(data.map(item => ({
+                    id: item._id,
+                    name: item.name,
+                    link: item.link,
+                    likes: item.likes.length
+                }
+                )))
+
+            })
+            .catch((err) => { console.log(err) })
     })
 
     return (
@@ -50,22 +51,16 @@ function Main(props) {
                 </div>
                 <button className="profile__add-button" type="button" onClick={props.onAddPlace}></button>
             </section>
-           
-            <section className="elements">
-            {cards.map((item) => {
-                return(
-                    <Card key={item.id} card={item} onCardClick={props.onCardClick}/>
-                )
-            })}
-             
-             
 
+            <section className="elements">
+                {cards.map((item) => {
+                    return (
+                        <Card key={item.id} card={item} onCardClick={props.onCardClick} />
+                    )
+                })}
             </section>
         </main>
     )
-
-
-
 }
 
 export default Main;
