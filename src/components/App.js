@@ -14,7 +14,6 @@ function App() {
 
   const [selectedCard, setSelectedCard] = React.useState(null);
 
-
   function handleEditProfileClick() {
     setEditProfilePopupOpen(true);
   }
@@ -37,7 +36,6 @@ function App() {
     setSelectedCard(card);
 
   }
-
 
   return (
     <>
@@ -78,7 +76,7 @@ function App() {
           <span className="avatar-input-error popup__span"></span>
         </div>
       </PopupWithForm>
-      <PopupWithForm title="Вы уверены?" name="confirm" buttonText="Да"/>
+      <PopupWithForm title="Вы уверены?" name="confirm" buttonText="Да" />
 
     </>
   );
