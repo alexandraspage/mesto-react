@@ -43,8 +43,8 @@
             method: "PATCH",
             headers: this._headers,
             body: JSON.stringify({
-                name: data.profileName,
-                about: data.profileDescription
+                name: data.name,
+                about: data.description
             })
         })
             .then(this._checkResponse)
