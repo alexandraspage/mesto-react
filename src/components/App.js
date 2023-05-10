@@ -32,23 +32,15 @@ function App() {
 
       })
       .catch((err) => { console.log(err) })
-  })
+  },[])
 
   React.useEffect(() => {
     api.getAllCards()
       .then((data) => {
-        setCards(data.map(item => ({
-          id: item._id,
-          name: item.name,
-          link: item.link,
-          likes: item.likes,
-          owner: item.owner._id
-        }
-        )))
-
+        setCards(data)
       })
       .catch((err) => { console.log(err) })
-  })
+  },[])
 
   function handleEditProfileClick() {
     setEditProfilePopupOpen(true);
@@ -75,33 +67,34 @@ function App() {
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
-    console.log(isLiked);
-    console.log(card.id)
 
     if (!isLiked) {
-      api.putLike(card.id)
+      api.putLike(card._id)
         .then((newCard) => {
-          setCards((state) => state.map((c) => c._id === card._id ? newCard : c))
-        })
+          setCards(() => 
+            cards.map((c) => c._id === card._id ? newCard : c))
+          })
+        .catch((err) => { console.log(err) })
     } else {
-      api.deleteLike(card.id)
+      api.deleteLike(card._id)
         .then((newCard) => {
-          setCards((state) => state.map((c) => c._id === card._id ? newCard : c))
+          setCards(() => 
+            cards.map((c) => c._id === card._id ? newCard : c))
         })
+        .catch((err) => { console.log(err) })
     }
 
   }
 
   function handleCardDelete(card) {
-    api.deleteCard(card.id)
+    api.deleteCard(card._id)
       .then(() => {
-        setCards((cards => cards.filter((c) => c._id !== card.id)))
+        setCards((cards => cards.filter((c) => c._id !== card._id)))
       })
       .catch((err) => { console.log(err) })
   }
 
   function handleUpdateUser({ name, description }) {
-    console.log({ name, description })
     api.changeUserInfo({ name, description })
       .then((data) => {
         setCurrentUser(data);
