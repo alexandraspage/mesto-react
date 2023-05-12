@@ -22,7 +22,6 @@ function App() {
 
   const [currentUser, setCurrentUser] = React.useState({});
 
-
   React.useEffect(() => {
 
     api.getInfo()

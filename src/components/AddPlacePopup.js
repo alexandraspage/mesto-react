@@ -10,7 +10,6 @@ function AddPlacePopup(props) {
         setLink('');
     }, [props.isOpen])
 
-
     function handleNameChange(e) {
         setName(e.target.value);
     }
